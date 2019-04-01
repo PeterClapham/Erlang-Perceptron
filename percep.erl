@@ -1,6 +1,12 @@
 -module(percep).
 -compile(export_all).
 
+test(N) ->
+	{Time, {W1, W2, B}} = timer:tc(percep, start, [N]),
+	io:fwrite("Time took: ~b mics~n", [Time]),
+	Error = (abs(1 - abs(W1/W2))/100 + abs(B)/100)/2,
+	io:fwrite("Average error: ~e%~n", [Error]).
+
 start(N) ->
 	buildData(N, [], []).
 
